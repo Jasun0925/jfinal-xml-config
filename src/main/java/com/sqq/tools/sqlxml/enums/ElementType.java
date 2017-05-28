@@ -9,5 +9,5 @@ package com.sqq.tools.sqlxml.enums;
  *
  */
 public enum ElementType {
-	mapper, select, update, insert, sql
+	mapper, select, update, insert, delete, sql
 }

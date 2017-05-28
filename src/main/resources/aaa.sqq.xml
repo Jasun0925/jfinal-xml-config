@@ -1,9 +1,29 @@
 <!DOCTYPE mapper SYSTEM "sqq-tool-sqlxml.dtd">
-<mapper namespace="com.sqq.tools.sqlxml.parse.ParseDelegate">
-	<select id="">
-		select * from aaa
-		<if test="3 > 4 || 8 > 7"></if>
+<mapper namespace="com.sqq.tools.sqlxml.GenerateSqlUtil">
+	<select id="findById">
+		select * from student where t.username = ${id}
+		<if test="username != null && username != ''">
+			and username = ${username}
+		</if>
+		<if test="age > 18">
+			and age = ${age}
+		</if>
+		order by username 
 	</select>
+	
+	<select id="findByName">
+		select * from student
+		<where>
+			<if test="username != null && username != ''">
+				and username = ${username}
+			</if>
+			<if test="age > 18">
+				and age = ${age}
+			</if>
+		</where>
+		order by username 
+	</select>
+	
 	<delete id=""></delete>
 	<update id=""></update>
 	<insert id=""></insert>
