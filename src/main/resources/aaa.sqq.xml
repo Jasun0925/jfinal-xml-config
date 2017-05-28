@@ -2,19 +2,20 @@
 <mapper namespace="com.sqq.tools.sqlxml.GenerateSqlUtil">
 	<select id="findById">
 		select * from student where t.username = ${id}
-		<if test="username != null && username != ''">
+		<if test="username != null and username != ''">
 			and username = ${username}
 		</if>
 		<if test="age > 18">
 			and age = ${age}
 		</if>
+		<include refid=""/>
 		order by username 
 	</select>
 	
 	<select id="findByName">
 		select * from student
 		<where>
-			<if test="username != null && username != ''">
+			<if test="username != null and username != ''">
 				and username = ${username}
 			</if>
 			<if test="age > 18">

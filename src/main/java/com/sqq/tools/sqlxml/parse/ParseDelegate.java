@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -18,6 +19,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Maps;
+import com.sqq.tools.sqlxml.enums.DynamicType;
 import com.sqq.tools.sqlxml.enums.ElementType;
 import com.sqq.tools.sqlxml.exception.ParseDocumentException;
 
@@ -26,6 +29,8 @@ import com.sqq.tools.sqlxml.exception.ParseDocumentException;
  */
 public class ParseDelegate {
 	private static final Logger logger = LoggerFactory.getLogger(ParseDelegate.class);
+
+	private Map<String, Object> cacheSqlMap = Maps.newConcurrentMap();
 	/**
 	 * 待过滤解析的元素
 	 */
@@ -63,21 +68,44 @@ public class ParseDelegate {
 				break;
 			else if (StringUtils.equals(ElementType.select.name(), node.getNodeName())) {
 				Node parentNode = node.getParentNode();
-				if (parentNode.hasAttributes()) {
-					Node item = parentNode.getAttributes().item(0);
-					System.out.println(item.getFirstChild().getNodeValue());
-				} else
+				if (!parentNode.hasAttributes())
 					throw new ParseDocumentException(
 							"parse：the namespace attribute is required, please check file is correct!");
-
-				if (node.hasAttributes()) {
-					Node item = node.getAttributes().item(0);
-					System.out.println(item.getFirstChild().getNodeValue());
-				} else
+				if (!node.hasAttributes())
 					throw new ParseDocumentException(
 							"parse：the id attribute is required, please check file is correct!");
-				Node firstChild = node.getFirstChild();
-				System.out.println(firstChild.getNodeValue().trim());
+				
+				String namespace = parentNode.getAttributes().item(0).getNodeValue();
+				String method = node.getAttributes().item(0).getNodeValue();
+				String namespaceMethod = namespace + "." + method;
+				System.out.println(namespaceMethod);
+
+				NodeList childNodes = node.getChildNodes();
+				for (int i = 0; i < childNodes.getLength(); i++) {
+					Node nodeCondition = childNodes.item(i);
+					String nodeName = nodeCondition.getNodeName();
+					if(StringUtils.equals(DynamicType.WHERE.getAttr(), nodeName)){
+						
+					}
+					if (StringUtils.equals(DynamicType.IF.getAttr(), nodeName)) {
+						if (!nodeCondition.hasAttributes())
+							throw new ParseDocumentException(
+									"parse：the id attribute is required, please check file is correct!");
+						// condition
+						String nodeValue = nodeCondition.getAttributes().item(0).getNodeValue();
+						System.out.println("condition:" + nodeValue);
+
+						String nodeValue2 = nodeCondition.getFirstChild().getNodeValue();
+						System.out.println("value:" + nodeValue2.trim());
+					}
+
+					if (StringUtils.isNotBlank(nodeCondition.getNodeValue())) {
+						System.out.println(nodeCondition.getNodeValue().trim());
+					}
+				}
+
+				cacheSqlMap.put(namespaceMethod, namespaceMethod);
+				System.out.println("--------------------------------------------");
 			}
 			break;
 		default:
