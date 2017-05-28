@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<employees bb="bbbbb" yy="yyyyy">
+	<!--An XML Note -->  
+	<employee id="11" name="xiaowang">
+		<sex>man</sex
+		<age>25</age>
+	</employee>
+	<employee id="12" name="liyi"
+		<sex>woman</sex>
+		<age>45</age>
+	</employee>
+</employees>  

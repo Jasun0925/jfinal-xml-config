@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!ELEMENT mapper (sql* | insert* | update* | delete* | select* )+>
+<!ATTLIST mapper namespace CDATA #IMPLIED>
+
+<!ELEMENT select (#PCDATA | include | where | foreach | choose | if)*>
+<!ATTLIST select id CDATA #REQUIRED>
+
+<!ELEMENT insert (#PCDATA | include | where | foreach | choose | if)*>
+<!ATTLIST insert id CDATA #REQUIRED>
+
+<!ELEMENT update (#PCDATA | include | where | foreach | choose | set | if)*>
+<!ATTLIST update id CDATA #REQUIRED>
+
+<!ELEMENT delete (#PCDATA | include | where | foreach | choose | if)*>
+<!ATTLIST delete id CDATA #REQUIRED>
+
+<!-- Dynamic -->
+<!ELEMENT include EMPTY>
+<!ATTLIST include refid CDATA #REQUIRED>
+
+<!ELEMENT sql (#PCDATA | include | where | foreach | choose | if)*>
+<!ATTLIST sql id CDATA #REQUIRED>
+
+<!ELEMENT set (#PCDATA | include | where | set | foreach | choose | if)*>
+<!ELEMENT where (#PCDATA | include | where | foreach | choose | if)*>
+
+<!ELEMENT foreach (#PCDATA | include | where | foreach | choose | if)*>
+<!ATTLIST foreach collection CDATA #REQUIRED item CDATA #IMPLIED open CDATA #IMPLIED close CDATA #IMPLIED separator CDATA #IMPLIED>
+
+<!ELEMENT choose (when* , otherwise?)>
+<!ELEMENT when (#PCDATA | include | where | foreach | choose | if)*>
+<!ATTLIST when test CDATA #REQUIRED>
+<!ELEMENT otherwise (#PCDATA | include | where | foreach | choose | if)*>
+
+<!ELEMENT if (#PCDATA | include | where | foreach | choose | if)*>
+<!ATTLIST if test CDATA #REQUIRED>

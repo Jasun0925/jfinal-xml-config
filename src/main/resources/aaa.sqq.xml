@@ -1,0 +1,11 @@
+<!DOCTYPE mapper SYSTEM "sqq-tool-sqlxml.dtd">
+<mapper namespace="com.sqq.tools.sqlxml.parse.ParseDelegate">
+	<select id="">
+		select * from aaa
+		<if test="3 > 4 || 8 > 7"></if>
+	</select>
+	<delete id=""></delete>
+	<update id=""></update>
+	<insert id=""></insert>
+	<sql id=""></sql>
+</mapper>
