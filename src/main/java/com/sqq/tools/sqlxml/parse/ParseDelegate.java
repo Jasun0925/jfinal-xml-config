@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.chainsaw.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -18,6 +19,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 import com.sqq.tools.sqlxml.enums.DynamicType;
@@ -74,7 +76,7 @@ public class ParseDelegate {
 				if (!node.hasAttributes())
 					throw new ParseDocumentException(
 							"parse：the id attribute is required, please check file is correct!");
-				
+
 				String namespace = parentNode.getAttributes().item(0).getNodeValue();
 				String method = node.getAttributes().item(0).getNodeValue();
 				String namespaceMethod = namespace + "." + method;
@@ -84,8 +86,8 @@ public class ParseDelegate {
 				for (int i = 0; i < childNodes.getLength(); i++) {
 					Node nodeCondition = childNodes.item(i);
 					String nodeName = nodeCondition.getNodeName();
-					if(StringUtils.equals(DynamicType.WHERE.getAttr(), nodeName)){
-						
+					if (StringUtils.equals(DynamicType.WHERE.getAttr(), nodeName)) {
+
 					}
 					if (StringUtils.equals(DynamicType.IF.getAttr(), nodeName)) {
 						if (!nodeCondition.hasAttributes())
@@ -118,5 +120,13 @@ public class ParseDelegate {
 				parseDocumentXml(childNodes.item(i));
 			}
 		}
+	}
+	
+	public static void main(String[] args) {
+		String replace = StringUtils.replace("and username = ${username}", "$\\w+}^", "?");
+		System.out.println(replace);
+		
+		System.out.println("and username = ${username}".replaceAll("^$\\w+}$", "?"));
+		
 	}
 }
