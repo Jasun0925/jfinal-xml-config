@@ -5,14 +5,18 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 import com.sqq.tools.sqlxml.bean.GenerateXmlResult;
 
+/**
+ * sql自动生成工具类
+ * 
+ * @author Jasun 2017年5月29日 下午3:20:16
+ */
 public class GenerateSqlUtil {
 	/**
 	 * 生成sql语句，适用于${}方式
 	 * 
-	 * @param sqlId
-	 *            xml语句id
-	 * @param map
-	 *            值
+	 * @author Jasun 2017年5月29日 下午3:21:08
+	 * @param sqlId xml语句id
+	 * @param map 值
 	 * @return 生成sql语句
 	 */
 	public static String generateSql(String sqlId, Map<String, Object> map) {
@@ -22,10 +26,9 @@ public class GenerateSqlUtil {
 	/**
 	 * 生成sql语句，适用于${}或#{}方式
 	 * 
-	 * @param sqlId
-	 *            xml语句id
-	 * @param map
-	 *            值
+	 * @author Jasun 2017年5月29日 下午3:21:35
+	 * @param sqlId xml语句id
+	 * @param map 值
 	 * @return 生成sql语句和对应查询条件值
 	 */
 	public static GenerateXmlResult generateSqlResult(String sqlId, Map<String, Object> map) {

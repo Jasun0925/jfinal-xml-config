@@ -7,7 +7,19 @@ import org.apache.commons.io.FileUtils;
 
 import com.sqq.tools.sqlxml.parse.ParseDelegate;
 
+/**
+ * 资源加载工具类
+ * 
+ * @author Jasun 2017年5月29日 下午3:23:34
+ */
 public class ResourceUtil {
+	/**
+	 * 启动加载xml sql配置文件
+	 */
+	static {
+		loadSqlXmlResource();
+	}
+
 	/**
 	 * 从根目录加载资源文件
 	 * 
@@ -29,9 +41,5 @@ public class ResourceUtil {
 		if (listFiles.isEmpty())
 			return;
 		new ParseDelegate().readXml(listFiles);
-	}
-
-	public static void main(String[] args) {
-		loadSqlXmlResource();
 	}
 }
